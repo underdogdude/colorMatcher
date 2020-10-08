@@ -1,7 +1,3 @@
-<!-- TODO :  - Decrease Life , 
-             - Show when false or true. 
-             - FIX Duplicate color
-        -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,6 +85,10 @@
         .choice__item:hover{ 
             transform: scale(1.3);
         }
+        .point { 
+            font-weight: bold;
+            font-size: 40px;
+        }
     </style>
 
 </head>
@@ -109,10 +109,10 @@
             <h1 class="title text-center glow" style="font-size: 3vw;">
                 Color Matcher 
             </h1>
-            <h2>
-                POINT : <span id="point">0</span>
+            <h2 style="margin-left: 20px;">
+                POINT : <span id="point" class="point">0</span>
             </h2>
-            <h2>LIFE: ❤️ ❤️ ❤️</h2>
+            <h2 style="margin-left: 20px;">LIFE: <span id="heart">❤️ ❤️ ❤️</span></h2>
         </div>
 
         <div class="question" id="question"></div>
@@ -128,6 +128,7 @@
     var SECTION_START = document.getElementById("start");
     var SECTION_GAME = document.getElementById("game");
     var POINT = 0;
+    var HEART = 3;
     var game = { 
         startBtn: function () { 
             SECTION_START.style.display = "none";
@@ -182,8 +183,26 @@
         },
         countPoint: function(point) { 
             POINT += (point * 10);
-            document.getElementById('point').innerHTML = POINT;
-
+            var heartElem = document.getElementById('heart');
+            var pointElem = document.getElementById('point');
+                pointElem.innerHTML = POINT;
+            
+            if(point === 0) { 
+                HEART = HEART - 1;
+                switch (HEART) {
+                    case 2:
+                        heartElem.innerHTML = "❤️ ❤️";
+                        break;
+                    case 1: 
+                        heartElem.innerHTML = "❤️";
+                        break;
+                    default:
+                        alert("GAMEOVER !!! Your score = " + POINT);
+                        location.reload();
+                        break;
+                }
+               
+            }
             this.startGame();
         }
     }
